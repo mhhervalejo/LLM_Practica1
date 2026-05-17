@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diario de un Viaje a Escocia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-oscuro: #1a2e1a;
+    --verde-medio: #2d4a2d;
+    --verde-musgo: #3d5c3d;
+    --verde-salvia: #5a7a5a;
+    --azul-noche: #0d1a2e;
+    --azul-profundo: #162440;
+    --azul-lago: #1e3a5f;
+    --azul-niebla: #2d5070;
+    --dorado: #c9a84c;
+    --dorado-suave: #e8c96e;
+    --dorado-palido: #f5e4a0;
+    --crema: #f0ead8;
+    --crema-oscura: #d4c9a8;
+    --piedra: #8a7d6a;
+    --niebla: rgba(200, 210, 220, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--azul-noche);
+    color: var(--crema);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ========== BARRA LATERAL ========== */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: 220px;
+    height: 100vh;
+    background: linear-gradient(180deg, #0a1520 0%, #0d1f2e 50%, #091810 100%);
+    border-right: 1px solid rgba(201, 168, 76, 0.2);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    text-align: center;
+    padding: 0 1rem 2rem;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-logo .runa {
+    font-size: 2rem;
+    color: var(--dorado);
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: 'Cinzel', serif;
+  }
+
+  .sidebar-logo .firma {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--crema-oscura);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+  }
+
+  .sidebar nav a {
+    display: block;
+    padding: 0.65rem 1.5rem;
+    color: var(--crema-oscura);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border-left: 2px solid transparent;
+    opacity: 0.75;
+  }
+
+  .sidebar nav a:hover {
+    color: var(--dorado-suave);
+    border-left-color: var(--dorado);
+    background: rgba(201, 168, 76, 0.05);
+    padding-left: 2rem;
+    opacity: 1;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: rgba(201, 168, 76, 0.12);
+    margin: 1rem 1.5rem;
+  }
+
+  .sidebar-weather {
+    margin-top: auto;
+    padding: 1.5rem;
+    font-size: 0.72rem;
+    color: var(--piedra);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    text-align: center;
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    line-height: 1.6;
+  }
+
+  .sidebar-weather .weather-icon { font-size: 1.5rem; display: block; margin-bottom: 0.4rem; }
+
+  /* ========== CONTENIDO PRINCIPAL ========== */
+  .main {
+    margin-left: 220px;
+    min-height: 100vh;
+  }
+
+  /* ========== HÉROE ========== */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 30% 60%, rgba(45, 80, 112, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 40%, rgba(29, 58, 30, 0.4) 0%, transparent 60%),
+      linear-gradient(180deg, #050d15 0%, #0d1a2e 40%, #091810 100%);
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?w=1600&q=80');
+    background-size: cover;
+    background-position: center 30%;
+    opacity: 0.18;
+    filter: saturate(0.6);
+  }
+
+  .particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--dorado);
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding: 2rem;
+    animation: fadeInUp 1.5s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--dorado);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--crema);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 60px rgba(201, 168, 76, 0.2);
+  }
+
+  .hero h1 em {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--dorado-suave);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--crema-oscura);
+    opacity: 0.8;
+    margin: 1.5rem 0 2.5rem;
+    line-height: 1.6;
+  }
+
+  .hero-frase {
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--dorado);
+    opacity: 0.9;
+    border-top: 1px solid rgba(201, 168, 76, 0.3);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+    padding: 0.8rem 2rem;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--dorado);
+    opacity: 0.5;
+    animation: bounce 2s ease infinite;
+  }
+
+  .scroll-hint span { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; }
+  .scroll-hint::after { content: '↓'; font-size: 1.2rem; }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ========== SECCIONES ========== */
+  section {
+    padding: 6rem 4rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-alt {
+    background: rgba(10, 20, 12, 0.4);
+  }
+
+  .section-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: var(--dorado);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 600;
+    color: var(--crema);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .section-title em {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--dorado-suave);
+  }
+
+  .section-rule {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--dorado), transparent);
+    margin: 1.5rem 0;
+  }
+
+  .prose {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--crema-oscura);
+    max-width: 680px;
+  }
+
+  .prose em { color: var(--dorado-palido); font-style: italic; }
+  .prose strong { color: var(--crema); font-weight: 600; }
+
+  /* ========== GALERÍA MOSAICO ========== */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 1rem;
+    margin: 3rem 0;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease, filter 0.6s ease;
+    filter: saturate(0.7) brightness(0.85);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+    filter: saturate(0.9) brightness(0.95);
+  }
+
+  .gallery-item:first-child { min-height: 380px; }
+  .gallery-item:not(:first-child) { min-height: 180px; }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(0deg, rgba(5, 13, 21, 0.9), transparent);
+    padding: 1.5rem 1rem 0.8rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--dorado-palido);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-caption { opacity: 1; }
+
+  /* ========== TARJETAS LUGARES ========== */
+  .places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 3rem 0;
+  }
+
+  .place-card {
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    background: rgba(13, 26, 46, 0.5);
+    padding: 0;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .place-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--dorado), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .place-card:hover { border-color: rgba(201, 168, 76, 0.4); transform: translateY(-3px); }
+  .place-card:hover::before { opacity: 1; }
+
+  .place-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    filter: saturate(0.6) brightness(0.75);
+    transition: filter 0.4s ease;
+    display: block;
+  }
+
+  .place-card:hover .place-card-img { filter: saturate(0.8) brightness(0.85); }
+
+  .place-card-body { padding: 1.5rem; }
+
+  .place-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dorado-suave);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .place-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--crema-oscura);
+    opacity: 0.8;
+    line-height: 1.7;
+  }
+
+  .place-card-tag {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  /* ========== ACORDEONES ========== */
+  .accordion {
+    margin: 2rem 0;
+    max-width: 780px;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.2rem 0;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--crema);
+    transition: color 0.3s;
+  }
+
+  .accordion-header:hover { color: var(--dorado-suave); }
+
+  .accordion-header .acc-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .accordion-header .acc-icon {
+    color: var(--dorado);
+    font-size: 1.2rem;
+    transition: transform 0.4s ease;
+    flex-shrink: 0;
+  }
+
+  .accordion-item.open .acc-icon { transform: rotate(45deg); }
+
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .accordion-item.open .accordion-body { max-height: 600px; }
+
+  .accordion-body-inner {
+    padding-bottom: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--crema-oscura);
+    line-height: 1.85;
+  }
+
+  .accordion-body-inner em { color: var(--dorado-palido); font-style: italic; }
+
+  /* ========== LEYENDAS ========== */
+  .legends-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  .legend-card {
+    padding: 2rem;
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    background: rgba(5, 13, 21, 0.5);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s;
+  }
+
+  .legend-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(201, 168, 76, 0.04), transparent 60%);
+    pointer-events: none;
+  }
+
+  .legend-card:hover { border-color: rgba(201, 168, 76, 0.3); }
+
+  .legend-glyph {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+    filter: sepia(1);
+  }
+
+  .legend-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--dorado-suave);
+    margin-bottom: 0.8rem;
+  }
+
+  .legend-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--crema-oscura);
+    opacity: 0.85;
+    line-height: 1.75;
+  }
+
+  /* ========== SECRETO ========== */
+  .secret-box {
+    margin: 3rem 0;
+    padding: 2.5rem;
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    background: linear-gradient(135deg, rgba(10, 20, 12, 0.7), rgba(13, 26, 46, 0.7));
+    position: relative;
+    cursor: pointer;
+    max-width: 680px;
+  }
+
+  .secret-box::before {
+    content: '✦ SECRETO ESCOCÉS ✦';
+    position: absolute;
+    top: -0.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--azul-noche);
+    padding: 0 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--dorado);
+  }
+
+  .secret-locked { display: block; }
+  .secret-revealed { display: none; }
+  .secret-box.unlocked .secret-locked { display: none; }
+  .secret-box.unlocked .secret-revealed { display: block; }
+
+  .secret-locked {
+    text-align: center;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--dorado);
+    font-size: 1.1rem;
+  }
+
+  .secret-locked small {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--piedra);
+    margin-top: 0.5rem;
+    font-style: normal;
+  }
+
+  .secret-revealed {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--crema-oscura);
+    line-height: 1.85;
+    font-style: italic;
+  }
+
+  /* ========== COMIDA ========== */
+  .food-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    margin: 2rem 0 0;
+  }
+
+  .food-tab {
+    padding: 0.8rem 1.5rem;
+    background: none;
+    border: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--piedra);
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .food-tab.active {
+    color: var(--dorado-suave);
+    border-bottom-color: var(--dorado);
+  }
+
+  .food-tab:hover { color: var(--crema); }
+
+  .food-panel { display: none; padding: 2rem 0; }
+  .food-panel.active { display: block; }
+
+  .food-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .food-item {
+    padding: 1.2rem;
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    background: rgba(13, 26, 46, 0.3);
+    transition: border-color 0.3s;
+  }
+
+  .food-item:hover { border-color: rgba(201, 168, 76, 0.3); }
+
+  .food-item h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--dorado-suave);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .food-item p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--crema-oscura);
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+
+  .veg-badge {
+    display: inline-block;
+    background: rgba(61, 92, 61, 0.3);
+    border: 1px solid rgba(90, 122, 90, 0.4);
+    color: #8eb88e;
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.6rem;
+    display: block;
+    width: fit-content;
+  }
+
+  /* ========== REFLEXIONES ========== */
+  .reflection-quote {
+    padding: 3rem 4rem;
+    border-left: 3px solid var(--dorado);
+    margin: 3rem 0;
+    position: relative;
+    max-width: 700px;
+    background: linear-gradient(90deg, rgba(201, 168, 76, 0.04), transparent);
+  }
+
+  .reflection-quote::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 1.5rem;
+    font-family: 'IM Fell English', serif;
+    font-size: 6rem;
+    color: var(--dorado);
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  .reflection-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--crema);
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reflection-quote footer {
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--dorado);
+    opacity: 0.7;
+  }
+
+  /* ========== ENLACES ========== */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .ext-link {
+    display: block;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    color: var(--crema-oscura);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .ext-link:hover {
+    border-color: rgba(201, 168, 76, 0.4);
+    color: var(--dorado-suave);
+    background: rgba(201, 168, 76, 0.04);
+    transform: translateY(-2px);
+  }
+
+  .ext-link span {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--dorado);
+    margin-bottom: 0.3rem;
+    opacity: 0.7;
+  }
+
+  /* ========== MAPA ESTILIZADO ========== */
+  .map-section {
+    background: rgba(5, 13, 21, 0.6);
+    padding: 3rem;
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    margin: 3rem 0;
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .map-svg-container { flex-shrink: 0; }
+
+  .map-info {
+    flex: 1;
+  }
+
+  .route-stop {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+  }
+
+  .route-stop:last-child { border-bottom: none; }
+
+  .stop-num {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--dorado);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--dorado);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .stop-info h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--dorado-suave);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
+  }
+
+  .stop-info p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--piedra);
+    font-style: italic;
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: #040a0e;
+    border-top: 1px solid rgba(201, 168, 76, 0.15);
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .footer-pergamino {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    background: rgba(201, 168, 76, 0.02);
+    position: relative;
+  }
+
+  .footer-pergamino::before, .footer-pergamino::after {
+    content: '✦';
+    position: absolute;
+    color: var(--dorado);
+    opacity: 0.3;
+    font-size: 0.8rem;
+  }
+
+  .footer-pergamino::before { top: 0.5rem; left: 0.8rem; }
+  .footer-pergamino::after { bottom: 0.5rem; right: 0.8rem; }
+
+  .signature {
+    font-family: 'IM Fell English', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--dorado-suave);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .signature-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--piedra);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-frase {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--dorado);
+    opacity: 0.6;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(201, 168, 76, 0.15);
+    padding-top: 1.2rem;
+    margin-top: 1.2rem;
+  }
+
+  .footer-copy {
+    margin-top: 2rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    color: var(--piedra);
+    opacity: 0.4;
+    letter-spacing: 0.1em;
+  }
+
+  /* ========== ORNAMENTOS ========== */
+  .ornament {
+    text-align: center;
+    color: var(--dorado);
+    opacity: 0.3;
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    margin: 2rem 0;
+    user-select: none;
+  }
+
+  /* ========== RESPONSIVE BÁSICO ========== */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    section { padding: 4rem 2rem; }
+    .legends-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-column: span 2; }
+    .map-section { flex-direction: column; }
+  }
+
+  /* ========== NIEBLA DECORATIVA ========== */
+  .fog-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.2), transparent);
+    margin: 0;
+  }
+
+  /* Animaciones de entrada por scroll */
+  .fade-left {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .fade-right {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .fade-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Imagen lateral flotante */
+  .float-img-container {
+    float: right;
+    margin: 0 0 1.5rem 2.5rem;
+    max-width: 280px;
+    position: relative;
+  }
+
+  .float-img-container img {
+    width: 100%;
+    filter: saturate(0.65) brightness(0.8);
+    display: block;
+  }
+
+  .float-img-container figcaption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--piedra);
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<!-- PARTÍCULAS FLOTANTES -->
+<script>
+  // Crear partículas antes del DOM
+</script>
+
+<!-- BARRA LATERAL -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span class="runa">☽ Marta ☾</span>
+    <span class="firma">diario de viaje</span>
+  </div>
+  <nav>
+    <a href="#llegada">✦ Mi llegada</a>
+    <a href="#lugares">✦ Lugares mágicos</a>
+    <a href="#ruta">✦ La ruta</a>
+    <div class="sidebar-divider"></div>
+    <a href="#leyendas">✦ Leyendas</a>
+    <a href="#sabores">✦ Sabores</a>
+    <a href="#secreto">✦ Secreto escocés</a>
+    <div class="sidebar-divider"></div>
+    <a href="#reflexiones">✦ Reflexiones</a>
+    <a href="#enlaces">✦ Para explorar</a>
+  </nav>
+  
+</nav>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="main">
+
+  <!-- HÉROE -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-img"></div>
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Diario personal · 2024</span>
+      <h1>Escocia,<br><em>tierra sin velos</em></h1>
+      <p class="hero-subtitle">Un cuaderno de viaje escrito entre niebla y maravilla,<br>entre castillos que guardan silencio y lagos que nunca revelan sus secretos.</p>
+      <span class="hero-frase">"Escocia no se visita. Escocia te ocurre."</span>
+    </div>
+    <div class="scroll-hint"><span>descender</span></div>
+  </div>
+
+  <div class="fog-line"></div>
+
+  <!-- SECCIÓN 1: LLEGADA -->
+  <section id="llegada">
+    <span class="section-tag">Capítulo I</span>
+    <h2 class="section-title">Mi llegada a <em>Escocia</em></h2>
+    <div class="section-rule"></div>
+
+    <div class="float-img-container">
+      <img src="https://images.unsplash.com/photo-1575583966369-2f8ee5f77bd7?w=600&q=80" alt="Paisaje escocés con bruma">
+      <figcaption>Primeras horas. Edimburgo desde el tren.</figcaption>
+    </div>
+
+    <div class="prose">
+      <p>El avión aterrizó en Edimburgo a las seis de la mañana. El cielo era de un gris particular —no el gris triste de las ciudades, sino un gris <em>vivo</em>, como si la luz estuviera pensando qué forma tomar. Nadie me había advertido que Escocia te recibe así: sin preámbulos, directo al alma.</p>
+
+      <p>La primera vez que vi el <strong>castillo de Edimburgo</strong> desde la calle Royal Mile, me detuve sin querer. No es un castillo de cuento —es más serio, más antiguo, más consciente de sí mismo. Lleva siglos mirando la ciudad y la ciudad lleva siglos mirándole de reojo.</p>
+
+      <p>Lo primero que aprendí: aquí la historia no está en los museos. Está en los adoquines, en los pubs donde se sirve whisky desde hace trescientos años, en los nombres de las calles que nadie pronuncia igual. Escocia es un lugar que todavía recuerda todo lo que le han hecho, y lo lleva con una especie de <em>orgullo tranquilo y muy fiero</em>.</p>
+    </div>
+
+    <div class="accordion" style="margin-top:2.5rem;">
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="acc-title">☽ Edimburgo: la ciudad que lee tus pensamientos</span>
+          <span class="acc-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>Edimburgo tiene una geometría extraña: la Old Town y la New Town separadas por un jardín que en el siglo XVIII fue un lago. Caminas del siglo XIV al XIX en diez minutos. El barrio de Grassmarket fue lugar de ejecuciones públicas; hoy tiene cervecerías y guitarristas callejeros, y por la noche —cuando hay niebla— uno no está del todo seguro de qué siglo habita.</p>
+            <p style="margin-top:1rem;">El Museo Nacional de Escocia es gratuito y extraordinario. Guarda desde la ley de sucesión jacobita hasta el dodo disecado más completo de Europa. Una cosa aparentemente sin relación con la otra; pero aquí todo forma parte de la misma historia desbordante.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="acc-title">☽ El tren hacia el norte: cuando empieza la magia</span>
+          <span class="acc-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>El tren ScotRail de Edimburgo a Inverness tarda unas tres horas. Nadie que haya hecho ese viaje puede explicar exactamente cuándo el paisaje cambia, porque no hay un momento concreto. Es gradual y luego, de repente, ya no hay ciudades. Solo colinas, agua, helechos y cielos que parecen pintados por alguien con <em>demasiadas emociones</em>.</p>
+            <p style="margin-top:1rem;">Me recomendaron sentarme en el lado derecho del tren para ver los lochs. Me senté en el izquierdo por equivocación. Fue igualmente perfecto. No creo que en Escocia exista una vista mala.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fog-line"></div>
+
+  <!-- SECCIÓN 2: LUGARES -->
+  <section id="lugares" class="section-alt">
+    <span class="section-tag">Capítulo II</span>
+    <h2 class="section-title">Lugares que <em>parecen magia</em></h2>
+    <div class="section-rule"></div>
+
+    <p class="prose" style="margin-bottom:2.5rem;">Hay sitios que el mapa nombra y la realidad supera. Estos son los que se me quedaron grabados a fuego, como si Escocia hubiera querido asegurarse de que no los olvidara.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1609674750700-33895b9b7ce1?w=900&q=80" alt="Highlands de Escocia">
+        <div class="gallery-caption">Glencoe — El valle donde el tiempo camina más despacio</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1581102279517-6e239d709fdf?w=600&q=80" alt="Lago Ness">
+        <div class="gallery-caption">Loch Ness — Y me quedé mirando el agua más de lo razonable</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1553447305-572c1904fdf8?w=600&q=80" alt="Castillo escocés">
+        <div class="gallery-caption">Eilean Donan — El castillo más fotografiado del mundo no decepciona</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1589806567522-18564e9cf0bc?w=600&q=80" alt="Islas Escocesas">
+        <div class="gallery-caption">Isle of Skye — Donde el cielo y el mar tienen el mismo color</div>
+      </div>
+    </div>
+
+    <div class="places-grid">
+      <div class="place-card">
+        <img class="place-card-img" src="https://images.unsplash.com/photo-1612721531077-835464dc58f9?w=600&q=80" alt="Highlands">
+        <div class="place-card-body">
+          <span class="place-card-tag">Paisaje · Naturaleza</span>
+          <h3>Las Highlands</h3>
+          <p>El interior de Escocia es lo más parecido que he visto a un paisaje que piensa. Las montañas cambian de color con las nubes. El brezo en flor tiñe las laderas de morado en agosto. Y el silencio —ese silencio solo interrumpido por el viento— es el más elocuente que conozco.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img class="place-card-img" src="https://images.unsplash.com/photo-1700485639640-a26f9b4aabc0?w=600&q=80" alt="Lago Ness">
+        <div class="place-card-body">
+          <span class="place-card-tag">Misterio · Leyenda</span>
+          <h3>Loch Ness</h3>
+          <p>Nadie que llegue aquí mira solo el paisaje. Todo el mundo acaba mirando el agua. El lago es oscuro, profundo (230 metros en algunos puntos) y tiene algo en su superficie tranquila que te hace sentir que eres tú el observado. No vi a Nessie. Quizás Nessie me vio a mí.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img class="place-card-img" src="https://images.unsplash.com/photo-1633434592891-97a8fc53a4a9?w=600&q=80" alt="Castillo de Edimburgo">
+        <div class="place-card-body">
+          <span class="place-card-tag">Historia · Castillos</span>
+          <h3>Los castillos</h3>
+          <p>Escocia tiene más castillos por kilómetro cuadrado que casi cualquier otro país. Stirling, Dunnottar sobre el acantilado, Eilean Donan rodeado de agua. Cada uno guarda una historia de traición, amor o guerra. A veces las tres cosas a la vez.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img class="place-card-img" src="https://images.unsplash.com/photo-1667122169237-f9826de1786b?w=600&q=80" alt="Isle of Skye">
+        <div class="place-card-body">
+          <span class="place-card-tag">Isla · Maravilla</span>
+          <h3>Isle of Skye</h3>
+          <p>La isla más salvaje y hermosa que he pisado. Las Fairy Pools —pozas de agua cristalina entre basalto negro— parecen literalmente sacadas de un cuento. El Quiraing es un paisaje tan extraño que el cerebro tarda un momento en procesar que es real. Lo es. Creo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUTA VISUAL -->
+  <section id="ruta">
+    <span class="section-tag">El recorrido</span>
+    <h2 class="section-title">Mi <em>ruta</em> por Escocia</h2>
+    <div class="section-rule"></div>
+
+    <div class="map-section">
+      <div class="map-svg-container">
+        <svg viewBox="0 0 200 320" width="200" height="320" style="opacity:0.85;">
+          <!-- Silueta muy simplificada de Escocia -->
+          <path d="M80,10 L110,15 L130,30 L140,50 L145,70 L140,90 L150,110 L155,130 L145,150 L160,165 L155,185 L140,200 L130,220 L120,240 L125,260 L110,280 L90,290 L70,280 L55,260 L65,240 L50,220 L40,200 L30,185 L35,165 L25,150 L30,130 L40,110 L35,90 L45,70 L50,50 L60,30 L75,15 Z" 
+                fill="rgba(30,58,95,0.3)" stroke="rgba(201,168,76,0.4)" stroke-width="1" />
+          <!-- Puntos de ruta -->
+          <circle cx="98" cy="195" r="5" fill="rgba(201,168,76,0.8)" />
+          <text x="108" y="198" fill="#c9a84c" font-size="8" font-family="Cinzel">Edimburgo</text>
+          <circle cx="88" cy="165" r="4" fill="rgba(201,168,76,0.6)" />
+          <text x="98" y="168" fill="#e8c96e" font-size="7" font-family="Cinzel">Stirling</text>
+          <circle cx="95" cy="100" r="4" fill="rgba(201,168,76,0.6)" />
+          <text x="105" y="103" fill="#e8c96e" font-size="7" font-family="Cinzel">Inverness</text>
+          <circle cx="80" cy="130" r="4" fill="rgba(201,168,76,0.6)" />
+          <text x="90" y="133" fill="#e8c96e" font-size="7" font-family="Cinzel">Loch Ness</text>
+          <circle cx="48" cy="90" r="4" fill="rgba(201,168,76,0.6)" />
+          <text x="58" y="93" fill="#e8c96e" font-size="7" font-family="Cinzel">Isle of Skye</text>
+          <!-- Línea de ruta -->
+          <polyline points="98,195 88,165 80,130 95,100 48,90" 
+                    fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="1.5" 
+                    stroke-dasharray="4,3" />
+        </svg>
+      </div>
+      <div class="map-info">
+        <div class="route-stop">
+          <div class="stop-num">1</div>
+          <div class="stop-info">
+            <h4>Edimburgo</h4>
+            <p>3 días. La ciudad que te da la bienvenida y nunca te suelta del todo.</p>
+          </div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-num">2</div>
+          <div class="stop-info">
+            <h4>Stirling & Loch Lomond</h4>
+            <p>1 día. El castillo donde coronaron a los reyes. El lago más grande de Gran Bretaña.</p>
+          </div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-num">3</div>
+          <div class="stop-info">
+            <h4>Loch Ness & Inverness</h4>
+            <p>2 días. El monstruo, el bosque negro, y el mejor whisky de todo el viaje.</p>
+          </div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-num">4</div>
+          <div class="stop-info">
+            <h4>Isle of Skye</h4>
+            <p>3 días. Demasiado poco. La próxima vez me quedo una semana.</p>
+          </div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-num">5</div>
+          <div class="stop-info">
+            <h4>Outer Hebrides</h4>
+            <p>2 días. Las islas más al oeste. Allí el viento tiene voz propia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fog-line"></div>
+
+  <!-- SECCIÓN 3: LEYENDAS -->
+  <section id="leyendas" class="section-alt">
+    <span class="section-tag">Capítulo III</span>
+    <h2 class="section-title">Historias y <em>leyendas</em></h2>
+    <div class="section-rule"></div>
+
+    <p class="prose" style="margin-bottom:2.5rem;">Escocia no distingue claramente entre historia e leyenda. Aquí las criaturas del folclore son tan reales como los clanes, y los clanes son tan míticos como cualquier dragón. Tomé notas de las historias que me contaron, algunas en pubs con mala luz, otras en caminos que no llevaban a ningún sitio.</p>
+
+    <div class="legends-grid">
+      <div class="legend-card">
+        <span class="legend-glyph">🐉</span>
+        <h3>El Kelpie</h3>
+        <p>Un caballo sobrenatural que habita los ríos y lagos. Aparece como un bello corcel y tenta a los viajeros para que monten en su lomo. Una vez que lo hacen, no pueden soltarse. El kelpie se sumerge y los arrastra al fondo. Los dos gigantescos caballos de acero en Falkirk —las esculturas Kelpies— son el homenaje moderno a esta criatura.</p>
+      </div>
+      <div class="legend-card">
+        <span class="legend-glyph">🧜</span>
+        <h3>Las Selkies</h3>
+        <p>Focas que se convierten en humanos al desprenderse de su piel. Las leyendas de Orkney y las Outer Hebrides hablan de marineros que se enamoran de ellas y les roban la piel para retenerlas en tierra. Pero la selkie siempre regresa al mar. Siempre. No hay historia de selkie que acabe de otro modo.</p>
+      </div>
+      <div class="legend-card">
+        <span class="legend-glyph">👹</span>
+        <h3>El Bean Nighe</h3>
+        <p>Una lavandiera fantasmal que aparece en los ríos lavando mortajas. Si alguien la ve, es presagio de muerte —la propia o la de alguien cercano. En algunas versiones, si logras atraparla antes de que ella te vea, debes concederte tres deseos. Nadie del pueblo donde pregunté había intentado atraparla. Nadie.</p>
+      </div>
+      <div class="legend-card">
+        <span class="legend-glyph">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
+        <h3>Las Fairy Mounds</h3>
+        <p>Los túmulos prehistóricos esparcidos por el paisaje escocés son, según la tradición, portales al mundo de las hadas. Los aos sídhe —los habitantes de ese otro mundo— no son las hadas dulces de los cuentos infantiles: son poderosos, caprichosos e impredecibles. Ofenderlos tiene consecuencias. No pisé ningún túmulo. Por si acaso.</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="acc-title">☽ Nessie: la leyenda más célebre del lago</span>
+          <span class="acc-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>La primera mención escrita data del siglo VI, cuando San Columba habría expulsado a un "monstruo acuático" del río Ness. La fotografía de 1934 —el "cirujano fotógrafo"— fue una falsificación confesada décadas después. Sin embargo, el lago tiene 37 kilómetros de longitud, hasta 230 metros de profundidad y sus aguas son tan oscuras por el contenido en turba que la visibilidad es de apenas un metro. Nadie puede afirmar con total seguridad qué hay en ese fondo.</p>
+            <p style="margin-top:1rem;"><em>Yo me quedé una hora sentado frente al lago. Lo único que vi fue niebla. Pero durante esa hora, el tiempo se detuvo de una forma que no sé explicar.</em></p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="acc-title">☽ Los clanes: historia que todavía late</span>
+          <span class="acc-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>La Masacre de Glencoe en 1692 fue perpetrada por el clan Campbell contra el clan MacDonald, huéspedes a los que habían acogido bajo su techo durante días. Hoy, más de tres siglos después, algunos pubs en las Highlands aún tienen carteles que dicen: <em>"No se sirve a Campbell"</em>. La memoria escocesa es larga, fiel y no perdona fácilmente.</p>
+            <p style="margin-top:1rem;">El sistema de tartanes —cada clan tiene un tejido de cuadros propio— fue en parte una invención romántica del siglo XIX. Pero eso no le quita ni un gramo de significado emocional a quien lo lleva.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fog-line"></div>
+
+  <!-- SECCIÓN 4: SABORES -->
+  <section id="sabores">
+    <span class="section-tag">Capítulo IV</span>
+    <h2 class="section-title">Sabores de <em>Escocia</em></h2>
+    <div class="section-rule"></div>
+
+    <p class="prose" style="margin-bottom:1rem;">Escocia tiene fama de cocina austera. Es, en parte, injusta. Tiene productos extraordinarios —mariscos, cordero, avena, whisky— y una tradición culinaria honesta que no presume, simplemente alimenta. Viajando sin comer carne ni pescado, descubrí que la despensa escocesa tiene más riqueza de lo que parece a primera vista.</p>
+
+    <div class="food-tabs">
+      <button class="food-tab active" onclick="switchTab(this, 'clasicos')">Clásicos escoceses</button>
+      <button class="food-tab" onclick="switchTab(this, 'veggie')">Para vegetarianos</button>
+      <button class="food-tab" onclick="switchTab(this, 'whisky')">El whisky</button>
+    </div>
+
+    <div class="food-panel active" id="tab-clasicos">
+      <p class="prose" style="margin-bottom:1.5rem; font-style:italic; opacity:0.7;">Los que probé en versión vegetariana o simplemente admiré desde lejos con respeto sincero:</p>
+      <div class="food-items">
+        <div class="food-item">
+          <h4>Scotch Broth</h4>
+          <p>Un caldo espeso con verduras, cebada perlada y, tradicionalmente, cordero. La versión vegana —sin carne— es igualmente reconfortante y se encuentra en muchos pubs. El alimento perfecto para un día de lluvia escocesa, que es casi cualquier día.</p>
+        </div>
+        <div class="food-item">
+          <h4>Porridge</h4>
+          <p>El desayuno fundacional de Escocia. Avena cocida con agua o leche, servida con miel, whisky o frutas del bosque. Es sencillo, honesto y absurdamente satisfactorio. En las Highlands te lo sirven tan espeso que la cuchara se sostiene sola.</p>
+        </div>
+        <div class="food-item">
+          <h4>Cranachan</h4>
+          <p>El postre nacional escocés: crema, avena tostada, frambuesas y whisky. Una pequeña celebración en cuenco. Ninguno de sus ingredientes viene de ningún sitio lejano; todo es Escocia en un bocado.</p>
+        </div>
+        <div class="food-item">
+          <h4>Tablet</h4>
+          <p>Una especie de turrón blando hecho de azúcar, leche condensada y mantequilla. Se vende en todas las tiendas de regalos. Compré cuatro bolsas. Duré dos días siendo disciplinado. Llegué a casa con nada.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="food-panel" id="tab-veggie">
+      <p class="prose" style="margin-bottom:1.5rem; font-style:italic; opacity:0.7;">El rincón más personal de este diario. Lo que encontré —y lo que busqué— viajando sin carne ni pescado:</p>
+      <div class="food-items">
+        <div class="food-item">
+          <span class="veg-badge">✦ Vegetariano</span>
+          <h4>Macaroni Cheese escocés</h4>
+          <p>Sí, parece humilde, pero en Escocia el mac and cheese es casi un alimento sagrado. Lo sirven incluso dentro de pasteles de hojaldre. Es el comfort food definitivo después de caminar ocho horas por las Highlands.</p>
+        </div>
+        <div class="food-item">
+          <span class="veg-badge">✦ Vegetariano</span>
+          <h4>Haggis vegano</h4>
+          <p>Existe y es sorprendentemente bueno. Una mezcla de avena, nueces, zanahoria, champiñones y especias. Se sirve con neeps and tatties (nabo y patata). Lo encontré en Edimburgo y en un pub de Inverness que sabía perfectamente lo que hacía.</p>
+        </div>
+        <div class="food-item">
+          <span class="veg-badge">✦ Vegetariano</span>
+          <h4>Sopa de ortigas</h4>
+          <p>Una tradición antigua que está volviendo. Las ortigas jóvenes de primavera se cocinan hasta perder su picor y forman una sopa verde oscura, densa, con sabor a tierra buena. La probé en una granja cerca de Pitlochry. No la olvidaré.</p>
+        </div>
+        <div class="food-item">
+          <span class="veg-badge">✦ Vegano</span>
+          <h4>Bannock con mermelada de mora</h4>
+          <p>El pan plano escocés, cocinado en sartén sin levadura desde la Edad Media. Con mermelada de mora silvestre recogida en las laderas del Cairngorm. Desayuno, merienda y cena al mismo tiempo. No necesitas más.</p>
+        </div>
+        <div class="food-item">
+          <span class="veg-badge">✦ Consejo personal</span>
+          <h4>Pide "plant-based options"</h4>
+          <p>En Escocia cada vez hay más opciones vegetarianas, especialmente en Edimburgo y Glasgow. En zonas rurales, los pubs siempre tienen al menos una opción sin carne. No dudes en preguntar directamente: la gente es amable y no te mirará raro.</p>
+        </div>
+        <div class="food-item">
+          <span class="veg-badge">✦ Imprescindible</span>
+          <h4>Mercado de Edimburgo</h4>
+          <p>El Farmer's Market de Castle Terrace (sábados) reúne productores locales. Miel de brezo, quesos de las islas, mermeladas silvestres, pan de centeno. Si vas un sábado, haz el favor de ir con hambre y una bolsa grande.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="food-panel" id="tab-whisky">
+      <p class="prose" style="margin-bottom:1.5rem;">El whisky escocés merece un capítulo propio. No es solo una bebida: es una industria, un ritual, una forma de tiempo. Hay más de 130 destilerías activas en Escocia, repartidas en cinco regiones con caracteres completamente distintos.</p>
+      <div class="food-items">
+        <div class="food-item">
+          <h4>Speyside</h4>
+          <p>Los whiskies más suaves y florales. Macallan, Glenfiddich, Glenlivet. El río Spey aporta algo al agua que nadie ha sabido explicar del todo y que se nota en la copa.</p>
+        </div>
+        <div class="food-item">
+          <h4>Islay</h4>
+          <p>Ahumados, turba pura, yodo marino. Laphroaig, Ardbeg, Bowmore. Son los whiskies más divisivos: o los amas desde el primer sorbo o tardas años en entenderlos. Yo tardé años.</p>
+        </div>
+        <div class="food-item">
+          <h4>Highlands</h4>
+          <p>Enormes variaciones. Desde el muy suave Glenmorangie hasta el intenso Dalmore. Las destilerías del norte tienen algo de la brutalidad hermosa del paisaje que las rodea.</p>
+        </div>
+        <div class="food-item">
+          <h4>Cómo beberlo</h4>
+          <p>Con unas gotas de agua fría (no hielo). El agua abre los aromas. En una destilería de Skye me dijeron: "El whisky es paciente. Deja que te cuente su historia." Es buen consejo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fog-line"></div>
+
+  <!-- SECRETO ESCOCÉS -->
+  <section id="secreto" class="section-alt">
+    <span class="section-tag">Detalle único</span>
+    <h2 class="section-title">El <em>Secreto Escocés</em></h2>
+    <div class="section-rule"></div>
+    <p class="prose" style="margin-bottom:2rem;">Cada lugar guarda algo que los mapas no dicen. Lo que encontré aquí lo encontré por accidente, como se encuentran las mejores cosas.</p>
+
+    <div class="secret-box" onclick="revealSecret(this)">
+      <div class="secret-locked">
+        ✦ Toca para revelar el secreto ✦
+        <small>Solo los viajeros verdaderos merecen saberlo</small>
+      </div>
+      <div class="secret-revealed">
+        <p><strong>Hay un pub en Edimburgo —el Sheep Heid Inn, fundado en 1360— que es el bar más antiguo de Escocia y quizás del Reino Unido.</strong> Sobrevivió a la Reforma, a las guerras de religión, a las epidemias y a la modernidad. Dentro tienen un salón de bolos victoriano que todavía funciona. No está en muchas guías turísticas convencionales porque prefiere que la gente lo descubra, como yo, cruzando sin querer una puerta equivocada.</p>
+        <p style="margin-top:1rem;">El secreto real de Escocia, sin embargo, no está en ningún pub. Está en la manera en que la gente de aquí habla de su tierra: con un amor que no necesita explicarse, que se nota en cómo dicen los nombres de los lugares, en cómo miran el horizonte cuando hay niebla. <em>Escocia no es solo un paisaje. Es una forma de pertenecer a algo más antiguo que uno mismo.</em></p>
+      </div>
+    </div>
+
+    <div class="ornament" style="margin-top:3rem;">✦ ✦ ✦</div>
+  </section>
+
+  <!-- SECCIÓN 5: REFLEXIONES -->
+  <section id="reflexiones">
+    <span class="section-tag">Capítulo V — El final</span>
+    <h2 class="section-title"><em>Reflexiones</em> del viaje</h2>
+    <div class="section-rule"></div>
+
+    <div class="reflection-quote">
+      <p>Escocia me enseñó que la belleza no siempre es amable. Puede ser fría, húmeda, ventosa. Puede hacer que pierdas el paso en un sendero o que no encuentres el pub que buscabas. Y aun así —o precisamente por eso— no te deja ir.</p>
+      <footer>— Día 12, carretera entre Portree y Uig, Isle of Skye</footer>
+    </div>
+
+    <div class="prose">
+      <p>Volví diferente, que es lo que tiene que ocurrir cuando se viaja de verdad. No volví con más respuestas sino con más preguntas, que es un tipo de riqueza infravalorada. ¿Qué hay en el fondo de ese lago? ¿En qué idioma sueñan los que todavía hablan gaélico? ¿Por qué el sonido de la gaita en las montañas parece brotar de la tierra y no de un instrumento?</p>
+
+      <p>Si tuviera que resumir Escocia en una sola imagen elegiría esta: estaba en un sendero a las afueras de Glencoe, llovía suavemente y había niebla baja. Delante de mí, una oveja de lana sucia me miró durante un largo momento con sus ojos amarillos, imperturbable. Luego se dio la vuelta y siguió su camino. <em>Ese es el espíritu de Escocia</em>, pensé. Antigua, firme, sin necesidad de impresionarte, completamente segura de lo que es.</p>
+
+      <p>Volveré. No es una promesa educada: es una certeza.</p>
+    </div>
+
+    <div class="accordion" style="margin-top:2.5rem;">
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="acc-title">☽ Consejos para quienes quieran seguir esta ruta</span>
+          <span class="acc-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p><em>La mejor época:</em> Mayo-junio (días largos, menos lluvia) o septiembre-octubre (colores del otoño, menos turistas). Agosto es el Festival de Edimburgo: maravilloso pero lleno.<br><br>
+            <em>Transporte:</em> Un coche de alquiler es casi imprescindible en las Highlands. Las carreteras son estrechas, a veces de un solo carril con apartaderos, pero el paisaje desde ellas es incomparable.<br><br>
+            <em>Dinero:</em> Escocia usa libras esterlinas. Los billetes escoceses no siempre se aceptan en Inglaterra, guárdalos de souvenir.<br><br>
+            <em>El midges:</em> Las moscas enanas de verano (midges) son el único enemigo real del viajero. Lleva repelente si vas entre junio y agosto, especialmente en zonas húmedas de las Highlands.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fog-line"></div>
+
+  <!-- ENLACES -->
+  <section id="enlaces" class="section-alt">
+    <span class="section-tag">Para explorar más</span>
+    <h2 class="section-title">Recursos para <em>tus propios pasos</em></h2>
+    <div class="section-rule"></div>
+
+    <div class="links-grid">
+      <a class="ext-link" href="https://www.visitscotland.com" target="_blank">
+        <span>Turismo oficial</span>
+        VisitScotland — La guía oficial con rutas, alojamientos y eventos.
+      </a>
+      <a class="ext-link" href="https://www.walkhighlands.co.uk" target="_blank">
+        <span>Senderismo</span>
+        Walk Highlands — Más de 2.000 rutas a pie con mapas y condiciones.
+      </a>
+      <a class="ext-link" href="https://www.scotswhisky.com" target="_blank">
+        <span>Cultura</span>
+        Scotch Whisky — Todo sobre las destilerías, regiones y catas.
+      </a>
+      <a class="ext-link" href="https://www.nts.org.uk" target="_blank">
+        <span>Patrimonio</span>
+        National Trust for Scotland — Castillos, jardines y paisajes protegidos.
+      </a>
+      <a class="ext-link" href="https://www.undiscoveredscotland.co.uk" target="_blank">
+        <span>Exploración</span>
+        Undiscovered Scotland — Rincones y lugares fuera de los circuitos.
+      </a>
+      <a class="ext-link" href="https://www.thehebrideantrust.org" target="_blank">
+        <span>Las islas</span>
+        The Hebridean Trust — Las islas escocesas, su naturaleza y comunidades.
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-pergamino">
+      <span class="signature">Marta Hernández H.</span>
+      <span class="signature-sub">viajera entre nieblas · buscadora de castillos y cuentos</span>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--piedra); line-height:1.7; font-style:italic; margin-bottom:0;">
+        Este diario fue escrito con las manos todavía frías del viento de las Highlands, 
+        el eco de una gaita todavía en el oído, y la convicción de que hay lugares en la tierra 
+        que son portales hacia una versión más antigua y más honesta de uno mismo.
+      </p>
+      <div class="footer-frase">
+        "Marta gu bràth" — Escocia para siempre
+      </div>
+    </div>
+    <p class="footer-copy">✦ Diario personal de viaje · Copyright © 2026 Todos los recuerdos reservados ✦</p>
+  </footer>
+
+</div><!-- /main -->
+
+<script>
+  // Partículas flotantes
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = (Math.random() * 8) + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+    container.appendChild(p);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('section, .fade-left, .fade-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Acordeones
+  function toggleAccordion(btn) {
+    const item = btn.closest('.accordion-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Pestañas de comida
+  function switchTab(btn, panelId) {
+    document.querySelectorAll('.food-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.food-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + panelId).classList.add('active');
+  }
+
+  // Secreto
+  function revealSecret(box) {
+    box.classList.add('unlocked');
+  }
+
+  // Resaltar enlace activo en sidebar según scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar nav a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current 
+        ? 'var(--dorado-suave)' : '';
+      a.style.borderLeftColor = a.getAttribute('href') === '#' + current
+        ? 'var(--dorado)' : '';
+      a.style.opacity = a.getAttribute('href') === '#' + current ? '1' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
